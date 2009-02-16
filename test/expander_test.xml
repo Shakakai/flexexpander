@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<objects xmlns="http://www.shakakai.com/xmlns/flex/expander">
+
+<!-- Core DI Definitions -->
+	
+	<!-- Property file -->
+	<properties src="main.properties" />
+	
+	<!-- Inline xml include :: strips the root node out to include child elements inline -->
+	<include src="service.xml" />
+	
+	<!-- Basic object declaration-->
+	<object id="mainCommand" class="com.shakakai.commands.MainCommand" scope="singleton">
+		<property name="string1" value="Thanks for checking this out!" />
+	</object>
+	
+	<!-- Object declaration with reference -->
+	<object id="mainMediator" class="com.shakakai.mediators.MainMediator" scope="prototype">
+		<property name="mainCommand" ref="mainCommand" />
+		<property name="title" value="Hello World!" />
+	</object>
+	
+<!-- Framework definition -->
+
+	<!-- Facade definition :: defines all core interfaces, proxies, commands, and mediators -->
+
+	<facade>
+		<notification name="getUpdate">
+			<argument name="artistName" type="String" />
+		</notification>
+		<notification name="onTwitterUpdate">
+			<argument name="result" type="String" />
+		</notification>
+		<notification name="openPopUp">
+			<argument name="view" type="mx.core.UIComponent" />
+		</notification>
+
+		<command name="mainCommand" ref="mainCommand" listens="openPopUp" />
+		
+		<mediator name="mainMediator" ref="mainMediator" listens="onTwitterUpdate" />
+		
+		<proxy name="mainProxy" ref="mainService" listens="getUpdate" />
+
+	</facade>
+	
+</objects>

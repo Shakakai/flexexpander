@@ -1,0 +1,75 @@
+{% extends 'package_base.pyas' %}
+
+{% block extraImports %}import flash.utils.getDefinitionByName;{% endblock %}
+
+{% block main %}
+	public class Container{
+	
+		function Container(facade:Facade){
+			_facade = facade;
+		}
+		
+		private var _facade:Facade;
+		
+		///
+		/// Object collection
+		///
+		{% for obj in objects %}
+			
+			{% if obj.isSingleton %}
+			private var _{{obj.name}}:{{obj.clazz}};
+			{% endif %}
+			
+			public function get {{obj.name}}():{{obj.clazz}} {
+				{% if obj.isSingleton %}
+				if( _{{obj.name}} != null ) return _{{obj.name}};
+				{% endif %}
+				
+				var a:{{obj.clazz}} = new {{obj.clazz}}();
+				{% for property in obj.properties %}
+					
+					{% if property.isRef %}
+						a.{{property.name}} = this.{{property.value}};
+					{% else %}
+						a.{{property.name}} = cast({{obj.clazz}}, '{{property.name}}', '{{property.value}}');
+					{% endif %}
+					
+				{% endfor %}
+				
+				{% if obj.isSingleton %}
+				_{{obj.name}} = a;
+				{% endif %}
+				
+				{% if obj.isFrameworkClazz %}
+				a.facade = _facade;
+				{% endif %}
+				
+				return a;
+			}
+		{% endfor %}
+	
+		protected function cast( clz:Class, property:String, value:String ):*
+						{
+							var result:XML = flash.utils.describeType( clz );
+							var type:String;
+							var clazz:Class;
+
+							if( result.factory.variable.(@name == property).length() > 0){
+								type = result.factory.variable.(@name == property)[0].@type;
+								clazz = flash.utils.getDefinitionByName(type) as Class;
+								return new clazz(value);
+							}
+							else if( result.factory.accessor.(@name == property).length() > 0 )
+							{
+								type = result.factory.accessor.(@name == property)[0].@type;
+								clazz = flash.utils.getDefinitionByName(type) as Class;
+								return new clazz(value);
+							}
+							else
+							{
+								throw new Error("Can't find property: " + property + " :: on class: " + clz);
+							}
+						}
+	}
+
+{% endblock %}

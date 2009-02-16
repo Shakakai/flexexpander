@@ -1,0 +1,37 @@
+{% extends 'package_base.pyas' %}
+
+{% block main %}
+	public class {% block className %}{% endblock %} implements {% for interface in interfaces %} {{package}}.interfaces.{{interface.name}} {% if not forloop.last %},{% endif %} {% endfor %} {
+	
+		{% block classContent %}
+		
+		{% endblock %}
+		
+		///
+		/// Implemented Interfaces
+		///
+
+		{% for interface in interfaces %}
+		 	/// Implement {{interface.name}}
+			
+			{% for method in interface.methods %}
+				
+				public function {{method.name}}( {% for arg in method.arguments %} {{arg.name}} : {{arg.type}} {% if not forloop.last %},{% endif %} {% endfor %} ) : {{method.returnType}} {
+					
+					{% block interfaceBlock %}{% endblock %}
+					
+				}
+			{% endfor %}
+			
+		{% endfor %}
+		
+		protected var _container:Container;
+		
+		public function get container():Container
+		{
+			return _container;
+		}
+		
+	}
+
+{% endblock %}

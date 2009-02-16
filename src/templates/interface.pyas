@@ -1,0 +1,15 @@
+{% extends 'package_base.pyas' %}
+
+{% block main %}
+
+	public interface {{interface.name}}{
+		
+		{% for method in interface.methods %}
+			
+			function {{method.name}}( {% for arg in method.arguments %} {{arg.name}} : {{arg.type}} {% if not forloop.last %},{% endif %} {% endfor %} ) : {{method.returnType}};
+			
+		{% endfor %}
+	
+	}
+
+{% endblock %}

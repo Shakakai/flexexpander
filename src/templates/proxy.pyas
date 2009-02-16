@@ -1,0 +1,43 @@
+{% extends 'core_interface.pyas' %}
+
+{% block className %}Proxy{% endblock %}
+
+{% block classContent %}
+
+	function Proxy( cont:Container ){
+		_container = cont;
+	}
+
+	{% for proxy in proxies %}
+		
+		private var _{{proxy.name}}:{{package}}.interfaces.IProxy;
+		
+		public function register_{{proxy.name}}( ):void{
+			if( _{{proxy.name}} == null ){
+				_{{proxy.name}} = this._container.{{proxy.ref}} as {{package}}.interfaces.IProxy;
+				_{{proxy.name}}.register();
+			}
+		}
+		
+		public function unregister_{{proxy.name}}():void{
+			if( _{{proxy.name}} != null ){
+				_{{proxy.name}}.unregister();
+				_{{proxy.name}} = null;
+			}
+		}
+		
+	{% endfor %}
+
+{% endblock %}
+
+{% block interfaceBlock %}
+
+					{% for proxy in proxies %}
+						
+						if( this._{{proxy.name}} != null && this._{{proxy.name}} is {{interface.name}}){
+							{{interface.name}}(this._{{proxy.name}}).{{method.name}}({% for arg in method.arguments %} {{arg.name}} {% if not forloop.last %},{% endif %} {% endfor %});
+						}
+						
+					{% endfor %}
+
+{% endblock %}

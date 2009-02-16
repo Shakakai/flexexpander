@@ -1,0 +1,35 @@
+{% extends 'package_base.pyas' %}
+
+{% block main %}
+	
+	public class BaseCommand implements {{package}}.interfaces.ICommand{
+	
+		function BaseCommand(){
+		
+		}
+	
+		
+		public function register():void
+		{
+		
+		}
+		
+		public function unregister():void
+		{
+		
+		}
+		
+		private var _facade:Facade;
+		
+		public function get facade():Facade
+		{
+			return _facade;
+		}
+		
+		public function set facade( value:Facade ):void
+		{
+			_facade = value;
+		}
+		
+	}
+{% endblock %}

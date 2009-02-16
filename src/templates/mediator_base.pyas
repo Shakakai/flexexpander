@@ -1,0 +1,50 @@
+{% extends 'package_base.pyas' %}
+
+{% block main %}
+	
+	public class BaseMediator implements {{package}}.interfaces.IMediator{
+	
+		function BaseMediator(){
+		
+		}
+		
+		public function register():void
+		{
+		
+		}
+		
+		public function unregister():void
+		{
+		
+		}
+		
+		
+		
+		private var _view:Object;
+		
+		public function set view( value:Object ):void
+		{
+			_view = value;
+		}
+		
+		public function get view():Object
+		{
+			return _view;
+		}
+		
+		
+		
+		private var _facade:Facade;
+		
+		public function get facade():Facade
+		{
+			return _facade;
+		}
+		
+		public function set facade( value:Facade ):void
+		{
+			_facade = value;
+		}
+		
+	}
+{% endblock %}

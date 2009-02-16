@@ -1,0 +1,43 @@
+{% extends 'core_interface.pyas' %}
+
+{% block className %}Controller{% endblock %}
+
+{% block classContent %}
+
+	function Controller( cont:Container ){
+		_container = cont;
+	}
+	
+	{% for command in commands %}
+		
+		private var _{{command.name}}:{{package}}.interfaces.ICommand;
+		
+		public function register_{{command.name}}( ):void{
+			if( _{{command.name}} == null ){
+				_{{command.name}} = this._container.{{command.ref}} as {{package}}.interfaces.ICommand;
+				_{{command.name}}.register();
+			}
+		}
+		
+		public function unregister_{{command.name}}():void{
+			if( _{{command.name}} != null ){
+				_{{command.name}}.unregister();
+				_{{command.name}} = null;
+			}
+		}
+		
+	{% endfor %}
+
+{% endblock %}
+
+{% block interfaceBlock %}
+
+					{% for command in commands %}
+						
+						if( this._{{command.name}} != null && this._{{command.name}} is {{interface.name}}){
+							{{interface.name}}(this._{{command.name}}).{{method.name}}({% for arg in method.arguments %} {{arg.name}} {% if not forloop.last %},{% endif %} {% endfor %});
+						}
+						
+					{% endfor %}
+
+{% endblock %}

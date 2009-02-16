@@ -1,0 +1,11 @@
+package{% block packageName %} {{package}} {% endblock %}{
+
+	{% for import in imports %}
+	import {{import}};
+	{% endfor %}
+	
+	{% block extraImports %}{% endblock %}
+	
+	{% block main %}{% endblock %}
+
+}

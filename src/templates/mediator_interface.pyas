@@ -1,0 +1,18 @@
+{% extends 'package_base.pyas' %}
+
+{% block main %}
+	
+	public interface IMediator{
+	
+		function register():void;
+		function unregister():void;
+		
+		function set facade( value:Facade ):void;
+		function get facade():Facade;
+		
+		function set view( value:Object ):void;
+		function get view():Object;
+	
+	}
+
+{% endblock %}

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<objects xmlns="http://www.shakakai.com/xmlns/flex/expander">
+	
+	<!-- Service definition -->
+	<object id="mainService" class="com.shakakai.service.TwitterService" implements="ITwitterService">
+		<property name="url" value="${serviceUrl}" />
+	</object>
+	
+</objects>

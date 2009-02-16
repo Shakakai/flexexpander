@@ -1,0 +1,15 @@
+{% extends 'package_base.pyas' %}
+
+{% block main %}
+	
+	public interface ICommand{
+	
+		function register():void;
+		function unregister():void;
+		
+		function set facade( value:Facade ):void;
+		function get facade():Facade;
+	
+	}
+
+{% endblock %}

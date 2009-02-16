@@ -1,0 +1,46 @@
+{% extends 'core_interface.pyas' %}
+
+{% block className %}View{% endblock %}
+
+{% block classContent %}
+
+	function View( cont:Container ){
+		_container = cont;
+	}
+
+	{% for med in mediators %}
+		
+		private var _{{med.name}}:{{package}}.interfaces.IMediator;
+		
+		public function register_{{med.name}}( view:Object ):void{
+			if( _{{med.name}} == null ){
+				_{{med.name}} = this._container.{{med.ref}} as {{package}}.interfaces.IMediator;
+				_{{med.name}}.view = view;
+				_{{med.name}}.register();
+			}
+		}
+		
+		public function unregister_{{med.name}}():void{
+			if( _{{med.name}} != null ){
+				_{{med.name}}.unregister();
+				_{{med.name}}.view = null;
+				_{{med.name}} = null;
+			}
+		}
+		
+	{% endfor %}
+
+
+{% endblock %}
+
+{% block interfaceBlock %}
+
+					{% for med in mediators %}
+						
+						if( this._{{med.name}} != null && this._{{med.name}} is {{interface.name}}){
+							{{interface.name}}(this._{{med.name}}).{{method.name}}({% for arg in method.arguments %} {{arg.name}} {% if not forloop.last %},{% endif %} {% endfor %});
+						}
+						
+					{% endfor %}
+
+{% endblock %}
