@@ -1,0 +1,23 @@
+<project name="MyProject" default="expander" basedir=".">
+    <description>
+        HelloExpander Project Build
+    </description>
+	
+	<property name="DESCRIPTOR" value="/Users/toddcullen/Documents/workspace/HelloExpander/config/project_config.xml" />
+	<property name="PKG" value="com.shakakai.helloworld" />
+	<property name="CMD" value="/Users/toddcullen/Documents/workspace/FlexExpander/src/flex_expander.py" />
+	<property name="SOURCE" value="/Users/toddcullen/Documents/workspace/HelloExpander/src" />
+	
+	<target name="expander">
+		<exec executable="python">
+			<arg value="${CMD}" />
+    		<arg value="-d"/>
+    		<arg value="${DESCRIPTOR}"/>
+    		<arg value="-s"/>
+  			<arg value="${SOURCE}"/>
+  			<arg value="-p"/>
+  			<arg value="${PKG}"/>
+  		</exec>
+	</target>
+ 
+</project>
