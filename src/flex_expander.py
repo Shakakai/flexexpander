@@ -13,7 +13,17 @@ import getopt
 from flex_expander_core import *
 
 help_message = '''
-The help message goes here.
+Prerequistes to use the script:
+    - Python 2.5 or greater
+    
+Usage:
+    There are three required parameters that must be passed in.
+    1. "--descriptor", "-d" : the xml application descriptor
+    2. "--source", "-s" : the source directory for your Flex application
+    3. "--package", "-p" : the package name within your source folder where you'd like the auto generated files to be placed.
+    
+    Additional parameters include:
+    * "--verbose", "-v" : verbose logging (Currently not enabled)
 '''
 
 class Usage(Exception):
@@ -50,7 +60,6 @@ def main(argv=None):
         if( descriptor == None or source == None or package == None ):
             raise Usage(help_message)
         
-        log(descriptor + ":" + source + ":" + package)
         FlexExpander.expand(descriptor, source, package)
         
     except Usage, err:

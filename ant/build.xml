@@ -1,12 +1,15 @@
 <project name="MyProject" default="expander" basedir=".">
     <description>
-        HelloExpander Project Build
+        Example FlexExanpder Ant Project
     </description>
 	
-	<property name="DESCRIPTOR" value="/Users/toddcullen/Documents/workspace/HelloExpander/config/project_config.xml" />
+	<property name="PROJECT_ROOT" value="/Some/Directory/Leading/To/The/Root" />
+	
+	
+	<property name="DESCRIPTOR" value="${PROJECT_ROOT}/config/project_config.xml" />
 	<property name="PKG" value="com.shakakai.helloworld" />
-	<property name="CMD" value="/Users/toddcullen/Documents/workspace/FlexExpander/src/flex_expander.py" />
-	<property name="SOURCE" value="/Users/toddcullen/Documents/workspace/HelloExpander/src" />
+	<property name="CMD" value="/Some/Directory/to/Flex/Expander/Here/flex_expander.py" />
+	<property name="SOURCE" value="${PROJECT_ROOT}/src" />
 	
 	<target name="expander">
 		<exec executable="python">
