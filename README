@@ -1,0 +1,13 @@
+  
+Prerequistes to use the script:
+    - Python 2.5 or greater
+    
+
+Usage:
+    There are three required parameters that must be passed in.
+    1. "--descriptor", "-d" : the xml application descriptor
+    2. "--source", "-s" : the source directory for your Flex application
+    3. "--package", "-p" : the package name within your source folder where you'd like the auto generated files to be placed.
+    
+    Additional parameters include:
+    * "--verbose", "-v" : verbose logging (Currently not enabled)

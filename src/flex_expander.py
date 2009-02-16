@@ -47,6 +47,9 @@ def main(argv=None):
             if option in ("-p", "--package"):
                 package = value
         
+        if( descriptor == None or source == None or package == None ):
+            raise Usage(help_message)
+        
         log(descriptor + ":" + source + ":" + package)
         FlexExpander.expand(descriptor, source, package)
         
